@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            padding-left: 500px;
+            padding-top: 100px;
+            background: url("铁ji.jpg")no-repeat;
+        }
+    </style>
+    <script src="./angular.js"></script>
+</head>
+<body ng-app='my' ng-controller="myc">
+<h2 style="color: skyblue">距离 <strong>"大神不必傲尽"</strong>回归还有</h2>
+<h1 style="color: palevioletred;">{{t}}</h1>
+<h1 style="color: fuchsia">
+    敬请期待！！！
+</h1>
+</body>
+<script>
+    var my = angular.module('my',[]);
+    my.controller('myc',function ($scope,$timeout) {
+        //目标时间对象
+        var ttarget = new Date();
+        //设置目标时间:2017.2.27.0.0.0
+        ttarget.setFullYear(2017);//年
+        ttarget.setMonth(2);//月(0-11)
+        ttarget.setDate(6);//日
+        ttarget.setHours(10);//时
+        ttarget.setMinutes(16);//分
+        ttarget.setSeconds(0);//秒
+        //当前时间对象
+        var t = {};
+        //剩余时间毫秒数
+        var td = 0;
+        //剩余事件字符串
+        function a() {
+            t = new Date();
+            td = ttarget.getTime()-t.getTime();
+            //剩余毫秒数转化为剩余秒数
+            td = Math.floor(td/1000);
+            //天数
+            var day = Math.floor(td/(3600*24));
+            //小时
+            var h = Math.floor((td%(3600*24))/3600);
+            //分钟
+            var m = Math.floor((td%3600)/60);
+            //秒
+            var s = Math.floor((td%60));
+            //拼成字符串
+            var str = day+'天'+h+'小时'+m+'分钟'+s+'秒';
+            $scope.t = str;
+            //angular延时器,延时1秒调用自己
+            $timeout(function () {
+                a();
+            }, 1000);
+        }
+        a();
+    })
+</script>
+</html>
